@@ -1,16 +1,36 @@
 <?php
-require_once("Animal.php");
-require_once("Mammifere.php");
-require_once("Oiseau.php");
+require __DIR__ . "/vendor/autoload.php";
 
-$peroquet = new Oiseau("gaetan", "Girafe", "50 cm");
-
-$lion = new Mammifere("Gaetan", "éléphant", "bien poilu");
+use App\Controller\CharacterController;
+use App\Controller\HomeController;
 
 
 
+if (isset($_GET['action'])) {
 
-var_dump($lion->presenter());
-var_dump($peroquet->presenter());
+    $action = $_GET['action'];
+} else {
 
-echo $lion->presenter();
+    $action = 'homePage';
+}
+
+
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+} else {
+    $id = null;
+}
+
+if (isset($_GET['type'])) {
+    $type = $_GET['type'];
+} else {
+    $type = null;
+}
+
+$characterController = new CharacterController();
+$homeController = new HomeController();
+
+if ($action === "homePage") {
+
+    $homeController->homePage($type);
+}

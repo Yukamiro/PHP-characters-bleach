@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Controller;
+
+use App\Manager\CharacterManager;
+use App\Model\Character;
+
+class HomeController
+{
+    private CharacterManager $characterManager;
+
+    public function __construct()
+    {
+        $this->characterManager = new CharacterManager();
+    }
+
+    public function homePage(?string $type)
+    {
+        $characters = [];
+        //Récuperer les voitures
+        if ($type != null) {
+            $characters = $this->characterManager->selectByType($type);
+            //Afficher les voitures dans la template
+        } else {
+            $characters = $this->characterManager->selectAll();
+            //Afficher les voitures dans la template
+
+        }
+        require_once("./templates/home.php");
+    }
+}
