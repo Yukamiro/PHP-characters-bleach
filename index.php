@@ -27,10 +27,16 @@ if (isset($_GET['type'])) {
     $type = null;
 }
 
+if (isset($_GET['name'])) {
+    $name = $_GET['name'] ?? "";
+} else {
+    $name = null;
+}
+
 $characterController = new CharacterController();
 $homeController = new HomeController();
 
 if ($action === "homePage") {
 
-    $homeController->homePage($type);
+    $homeController->homePage($name, $type);
 }

@@ -163,4 +163,36 @@ class   CharacterManager extends DatabaseManager
             }
         }
     }
+
+    public function selectByName(string $name): array
+    {
+
+        $requete = self::getConnexion()->prepare("SELECT * FROM `character` WHERE `name`LIKE :name;");
+        $requete->execute(
+            [
+                ':name' => "%" . $name . "%"
+            ]
+        );
+        $characters = $requete->fetchAll();
+
+        $charactersObjects = [];
+        foreach ($characters as $character) {
+
+            $charactersObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], []);
+
+            $requete = self::getConnexion()->prepare("SELECT * FROM powers WHERE character_id = :id");
+            $requete->execute([
+                ":id" => $charactersObject->getId()
+            ]);
+
+
+            $powers = $requete->fetchAll();
+            foreach ($powers as $power) {
+
+                $charactersObject->addPower(new Power($power["id"], $power["character_id"], $power["power_name"]));
+            }
+            $charactersObjects[] = $charactersObject;
+        }
+        return $charactersObjects;
+    }
 }

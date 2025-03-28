@@ -14,11 +14,15 @@ class HomeController
         $this->characterManager = new CharacterManager();
     }
 
-    public function homePage(?string $type)
+    public function homePage(?string $name, ?string $type)
     {
         $characters = [];
+
         //Récuperer les voitures
-        if ($type != null) {
+        if ($name != null) {
+
+            $characters = $this->characterManager->selectByName($name);
+        } else if ($type != null) {
             $characters = $this->characterManager->selectByType($type);
             //Afficher les voitures dans la template
         } else {
