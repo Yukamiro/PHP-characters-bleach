@@ -10,6 +10,7 @@
         body {
             background-color: #111;
             color: #eee;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .character-card {
@@ -18,6 +19,12 @@
             padding: 2em;
             box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
             margin-bottom: 2em;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body:not(.light-mode) .btn-theme:hover {
+            background-color: #0dcaf0;
+            color: #111;
         }
 
         .character-img {
@@ -36,44 +43,87 @@
             color: #00bcd4;
             font-size: 1.8em;
         }
+
+        /* Mode clair */
+        body.light-mode {
+            background-color: #f4f4f4;
+            color: #222;
+        }
+
+        .light-mode .character-card {
+            background-color: #ffffff;
+            color: #222;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .light-mode .powers-list {
+            color: rgb(249, 1, 1);
+        }
+
+        .light-mode h2 {
+            color: #0077aa;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1em;
+            left: 1em;
+            z-index: 1000;
+        }
+
+        /* Style conditionnel pour les boutons de type */
+        .btn-theme {
+            transition: background-color 0.3s, color 0.3s, border 0.3s;
+        }
+
+        body:not(.light-mode) .btn-theme {
+            border-color: #0dcaf0;
+            color: #0dcaf0;
+        }
+
+        body.light-mode .btn-theme {
+            border-color: #333;
+            color: #333;
+        }
+
+        body.light-mode .btn-theme:hover {
+            background-color: #333;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
+    <button class="btn btn-warning theme-toggle" onclick="toggleTheme()">🌗</button>
+
     <div class="container py-5">
         <h1 class="text-center mb-4">Personnages de Bleach</h1>
-        <form action="index.php?action=homePage" method="GET" style="text-align: center; margin: 2em 0;">
 
+        <form action="index.php?action=homePage" method="GET" style="text-align: center; margin: 2em 0;">
+            <input type="hidden" name="action" value="homePage">
             <input type="text" id="search" name="name" placeholder="Recherche un personnage..."
                 style="padding: 0.5em 1em; width: 50%; border-radius: 5px; border: 1px solid #ccc;">
             <button type="submit" style="padding: 0.5em 1em; margin-left: 0.5em; border: none; background: #333; color: white; border-radius: 5px;">
                 Rechercher
             </button>
         </form>
-        <div class="d-flex justify-content-center gap-3 mb-5">
-            <a class="btn btn-outline-info" href="index.php">Tous</a>
-            <a class="btn btn-outline-info" href="index.php?action=homePage&type=Shinigami">Shinigami</a>
-            <a class="btn btn-outline-info" href="index.php?action=homePage&type=Arrancar">Arrancars</a>
-            <a class="btn btn-outline-info" href="index.php?action=homePage&type=Fullbringer">Fullbringer</a>
-            <a class="btn btn-outline-info" href="index.php?action=homePage&type=Quincy">Quincy</a>
+
+        <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
+            <a class="btn btn-theme" href="index.php">Tous</a>
+            <a class="btn btn-theme" href="index.php?action=homePage&type=Shinigami">Shinigami</a>
+            <a class="btn btn-theme" href="index.php?action=homePage&type=Arrancar">Arrancars</a>
+            <a class="btn btn-theme" href="index.php?action=homePage&type=Fullbringer">Fullbringer</a>
+            <a class="btn btn-theme" href="index.php?action=homePage&type=Quincy">Quincy</a>
         </div>
-        <?php
 
-        use App\Model\Character;
-
-        // var_dump($_POST);
-        // var_dump($_GET);
-        ?>
         <div class="row">
-
             <?php
-            echo (count($characters) == 0 ? ("Aucun résultat") : "");
+            echo (count($characters) == 0 ? ("<p class='text-center'>Aucun résultat</p>") : "");
             foreach ($characters as $character): ?>
+
                 <div class="col-md-6 col-lg-4">
                     <div class="character-card p-3">
                         <div class="mb-3 text-center">
-                            <?php // if ($_POST == $character->getName()) {
-                            ?>
                             <img src="<?= htmlspecialchars($character->getImage()) ?>" alt="<?= htmlspecialchars($character->getName()) ?>" class="character-img">
                         </div>
                         <h2 class="text-center"><?= htmlspecialchars($character->getName()) ?></h2>
@@ -88,25 +138,23 @@
                             <p><strong>Fullbring :</strong> <?= htmlspecialchars($character->getFullbring_type()) ?></p>
                         <?php endif; ?>
 
-                        <div class="powers-list">
-                            <strong>Pouvoirs :</strong>
-                            <?php if (!empty($character->getPowers())): ?>
-                                <ul class="mb-0">
-                                    <?php foreach ($character->getPowers() as $power): ?>
-                                        <li><?= htmlspecialchars($power->getPower_name()) ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php else: ?>
-                                <p>null</p>
-                            <?php endif; ?>
-                        </div>
+
+
+
+
+                        <a class="btn btn-theme" href="index.php?action=detailPage&id=<?php echo ($character->getId()); ?>">Voir le personnage</a>
+
                     </div>
                 </div>
-                <?php  // } 
-                ?>
             <?php endforeach; ?>
         </div>
     </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle("light-mode");
+        }
+    </script>
 </body>
 
 </html>

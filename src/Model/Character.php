@@ -6,7 +6,7 @@ namespace App\Model;
 
 class Character
 {
-    public function __construct(private string $id, private string $name, private string $type, private ?string $zanpakuto, private ?string $letter, private ?string $fullbring_type, private string $image, private array $powers)
+    public function __construct(private string $id, private string $name, private string $type, private ?string $zanpakuto, private ?string $letter, private ?string $fullbring_type, private string $image, private array $powers, private string $details)
     {
         $this->id = $id;
         $this->name = $name;
@@ -174,6 +174,26 @@ class Character
     public function setImage($image)
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of details
+     */
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    /**
+     * Set the value of details
+     *
+     * @return  self
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
 
         return $this;
     }

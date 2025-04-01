@@ -21,6 +21,7 @@ if (isset($_GET['id'])) {
     $id = null;
 }
 
+
 if (isset($_GET['type'])) {
     $type = $_GET['type'];
 } else {
@@ -28,15 +29,19 @@ if (isset($_GET['type'])) {
 }
 
 if (isset($_GET['name'])) {
-    $name = $_GET['name'] ?? "";
+    $name = $_GET['name'] ?: "";
 } else {
     $name = null;
 }
 
-$characterController = new CharacterController();
+var_dump($_GET);
+
 $homeController = new HomeController();
 
 if ($action === "homePage") {
 
     $homeController->homePage($name, $type);
+} else if ($action === "detailPage") {
+
+    $homeController->detailPage($id);
 }

@@ -29,7 +29,21 @@ class HomeController
             $characters = $this->characterManager->selectAll();
             //Afficher les voitures dans la template
 
+
         }
         require_once("./templates/home.php");
+    }
+
+    public function detailPage(?int $id)
+    {
+        if ($id != null) {
+
+            $characters = $this->characterManager->selectById($id);
+            //Afficher les voitures dans la template
+            require_once("./templates/detail.php");
+        } else {
+            $characters = $this->characterManager->selectAll();
+            require_once("./templates/home.php");
+        }
     }
 }

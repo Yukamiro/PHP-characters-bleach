@@ -21,7 +21,7 @@ class   CharacterManager extends DatabaseManager
         $charactersObjects = [];
         foreach ($charactersArray as $characterArray) {
 
-            $charactersObject = new Character($characterArray["id"], $characterArray["name"], $characterArray["type"], $characterArray["zanpakuto"], $characterArray["letter"], $characterArray["fullbring_type"], $characterArray["image"], []);
+            $charactersObject = new Character($characterArray["id"], $characterArray["name"], $characterArray["type"], $characterArray["zanpakuto"], $characterArray["letter"], $characterArray["fullbring_type"], $characterArray["image"], [], $characterArray["details"]);
 
             $requete = self::getConnexion()->prepare("SELECT * FROM powers WHERE character_id = :id");
             $requete->execute([
@@ -52,7 +52,7 @@ class   CharacterManager extends DatabaseManager
 
 
 
-        $characterObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], []);
+        $characterObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], [], $character["details"]);
 
         $requete = self::getConnexion()->prepare("SELECT * FROM powers WHERE character_id = :id");
         $requete->execute([
@@ -84,7 +84,7 @@ class   CharacterManager extends DatabaseManager
         $charactersObjects = [];
         foreach ($characters as $character) {
 
-            $charactersObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], []);
+            $charactersObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], [], $character["details"]);
 
             $requete = self::getConnexion()->prepare("SELECT * FROM powers WHERE character_id = :id");
             $requete->execute([
@@ -178,7 +178,7 @@ class   CharacterManager extends DatabaseManager
         $charactersObjects = [];
         foreach ($characters as $character) {
 
-            $charactersObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], []);
+            $charactersObject = new Character($character["id"], $character["name"], $character["type"], $character["zanpakuto"], $character["letter"], $character["fullbring_type"], $character["image"], [], $character["details"]);
 
             $requete = self::getConnexion()->prepare("SELECT * FROM powers WHERE character_id = :id");
             $requete->execute([
